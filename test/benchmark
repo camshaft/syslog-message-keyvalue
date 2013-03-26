@@ -1,0 +1,9 @@
+#!/usr/bin/env escript
+
+%%! -pa ./ebin -pa ./test
+
+main([])->
+  main(["100000"]);
+main([Limit])->
+  Count = list_to_integer(Limit),
+  syslog_message_keyvalue_benchmark:test(Count).
