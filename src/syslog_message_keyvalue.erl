@@ -9,52 +9,59 @@
 %% @public
 -spec parse(binary()) -> {ok, [{binary(), binary()}]}.
 parse(Message)->
-  parse_message(Message, [], <<>>, <<>>, unknown, false).
+  find_key(Message, [], <<>>, <<>>, false).
 
-%% Unknown
-parse_message(<<" ",Rest/binary>>, Parts, <<>> = Key, <<>> = Value, unknown, false)->
-  parse_message(Rest, Parts, Key, Value, unknown, false);
-parse_message(<<$",C:1/binary,Rest/binary>>, Parts, _, Value, unknown, false)->
-  parse_message(Rest, Parts, C, Value, key, true);
-parse_message(<<C:1/binary,Rest/binary>>, Parts, _, Value, unknown, false)->
-  parse_message(Rest, Parts, C, Value, key, false);
+
+%% @doc Find a key
+%% @private
+-spec find_key(binary(), [{binary(), binary()}], binary(), binary(), boolean()) -> {ok, [{binary(), binary()}]}.
+find_key(<<" ",Rest/binary>>, Parts, <<>> = Key, <<>> = Value, false)->
+  find_key(Rest, Parts, Key, Value, false);
+find_key(<<$",C:1/binary,Rest/binary>>, Parts, _, Value, false)->
+  parse_key(Rest, Parts, C, Value, true);
+find_key(<<C:1/binary,Rest/binary>>, Parts, _, Value, false)->
+  parse_key(Rest, Parts, C, Value, false);
+find_key(<<>>, Parts, _, _, _)->
+  {ok, Parts}.
 
 %% Key
 
 %%    end
-parse_message(<<$",$=,Rest/binary>>, Parts, Key, Value, key, true)->
-  parse_message(Rest, Parts, Key, Value, value, false);
-parse_message(<<$",$=,$",Rest/binary>>, Parts, Key, Value, key, true)->
-  parse_message(Rest, Parts, Key, Value, value, true);
-parse_message(<<$=,$",Rest/binary>>, Parts, Key, Value, key, false)->
-  parse_message(Rest, Parts, Key, Value, value, true);
-parse_message(<<$=,Rest/binary>>, Parts, Key, Value, key, false)->
-  parse_message(Rest, Parts, Key, Value, value, false);
+-spec parse_key(binary(), [{binary(), binary()}], binary(), binary(), boolean()) -> {ok, [{binary(), binary()}]}.
+parse_key(<<$",$=,Rest/binary>>, Parts, Key, Value, true)->
+  parse_value(Rest, Parts, Key, Value, false);
+parse_key(<<$",$=,$",Rest/binary>>, Parts, Key, Value, true)->
+  parse_value(Rest, Parts, Key, Value, true);
+parse_key(<<$=,$",Rest/binary>>, Parts, Key, Value, false)->
+  parse_value(Rest, Parts, Key, Value, true);
+parse_key(<<$=,Rest/binary>>, Parts, Key, Value, false)->
+  parse_value(Rest, Parts, Key, Value, false);
+parse_key(<<>>, Parts, _, _, _)->
+  {ok, Parts};
 
 %%    append
-parse_message(<<C:1/binary,Rest/binary>>, Parts, Key, Value, key, HasQuotes)->
-  parse_message(Rest, Parts, <<Key/binary,C/binary>>, Value, key, HasQuotes);
+parse_key(<<C:1/binary,Rest/binary>>, Parts, Key, Value, HasQuotes)->
+  parse_key(Rest, Parts, <<Key/binary,C/binary>>, Value, HasQuotes).
 
 %% Value
-parse_message(<<"\\\"",Rest/binary>>, Parts, Key, Value, value, true)->
-  parse_message(Rest, Parts, Key, <<Value/binary,$">>, value, true);
-parse_message(<<"\\\\",Rest/binary>>, Parts, Key, Value, value, true)->
-  parse_message(Rest, Parts, Key, <<Value/binary,"\\">>, value, true);
+-spec parse_value(binary(), [{binary(), binary()}], binary(), binary(), boolean()) -> {ok, [{binary(), binary()}]}.
+parse_value(<<"\\\"",Rest/binary>>, Parts, Key, Value, true)->
+  parse_value(Rest, Parts, Key, <<Value/binary,$">>, true);
+parse_value(<<"\\\\",Rest/binary>>, Parts, Key, Value, true)->
+  parse_value(Rest, Parts, Key, <<Value/binary,"\\">>, true);
 
 %%    end
-parse_message(<<>>, Parts, Key, Value, value, false)->
+parse_value(<<>>, Parts, Key, Value, false)->
   {ok, [{Key, Value}|Parts]};
-parse_message(<<"\n">>, Parts, Key, Value, value, _)->
+parse_value(<<"\n">>, Parts, Key, Value, _)->
   {ok, [{Key, Value}|Parts]};
-parse_message(<<" ",Rest/binary>>, Parts, Key, Value, value, false)->
-  parse_message(Rest, [{Key, Value}|Parts], <<>>, <<>>, unknown, false);
-parse_message(<<"\"",Rest/binary>>, Parts, Key, Value, value, true)->
-  parse_message(Rest, [{Key, Value}|Parts], <<>>, <<>>, unknown, false);
+parse_value(<<" ",Rest/binary>>, Parts, Key, Value, false)->
+  find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>, false);
+parse_value(<<"\"",Rest/binary>>, Parts, Key, Value, true)->
+  find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>, false);
+parse_value(<<>>, Parts, _, _, _)->
+  {ok, Parts};
 
 %%    append
-parse_message(<<C:1/binary,Rest/binary>>, Parts, Key, Value, value, HasQuotes)->
-  parse_message(Rest, Parts, Key, <<Value/binary,C/binary>>, value, HasQuotes);
-
-%% Ended midstream
-parse_message(<<>>, Parts, _, _, _, _)->
-  {ok, Parts}.
+parse_value(<<C:1/binary,Rest/binary>>, Parts, Key, Value, HasQuotes)->
+  parse_value(Rest, Parts, Key, <<Value/binary,C/binary>>, HasQuotes).

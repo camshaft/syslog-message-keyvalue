@@ -19,10 +19,10 @@ Benchmarks
 ----------
 
 ```sh
-$ make bench
+$  make bench
 ./rebar compile
 ==> syslog-message-keyvalue (compile)
 ./test/benchmark
-100000 iterations in 1.400548s
-71400.62318463916 messages/sec
+100000 iterations in 0.949733s
+105292.75069940709 messages/sec
 ```
