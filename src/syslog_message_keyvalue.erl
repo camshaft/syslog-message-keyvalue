@@ -152,7 +152,7 @@ parse_value(<<"\n">>, Parts, Key, Value)->
   {ok, [{Key, Value}|Parts]};
 
 %% Adds another 60,000 msg/sec on 2Ghz i7
-%% becomes much slower when the value is longer than 64 bytes
+%% becomes much slower when the value is longer than 128 bytes
 parse_value(<<$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>);
 parse_value(<<$\s>>, Parts, Key, Value)->
@@ -309,8 +309,140 @@ parse_value(<<C:63/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:64/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:65/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:66/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:67/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:68/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:69/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 
+parse_value(<<C:70/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:71/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:72/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:73/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:74/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:75/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:76/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:77/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:78/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:79/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 
+parse_value(<<C:80/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:81/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:82/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:83/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:84/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:85/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:86/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:87/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:88/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:89/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
+parse_value(<<C:90/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:91/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:92/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:93/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:94/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:95/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:96/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:97/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:98/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:99/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
+parse_value(<<C:100/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:101/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:102/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:103/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:104/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:105/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:106/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:107/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:108/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:109/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
+parse_value(<<C:110/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:111/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:112/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:113/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:114/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:115/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:116/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:117/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:118/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:119/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
+parse_value(<<C:120/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:121/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:122/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:123/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:124/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:125/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:126/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:127/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:128/binary,$\s,Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 
 %% append
 parse_value(<<C:1/binary,Rest/binary>>, Parts, Key, Value)->
