@@ -103,29 +103,38 @@ parse_key(<<C:1/binary,Rest/binary>>, Parts, Key, Value)->
 
 %% Transition state
 start_value(<<$", Rest/binary>>, Parts, Key, Value)->
-  parse_value(Rest, Parts, Key, Value, true);
+  parse_quote_value(Rest, Parts, Key, Value);
 start_value(Rest, Parts, Key, Value)->
-  parse_value(Rest, Parts, Key, Value, false).
+  parse_value(Rest, Parts, Key, Value).
 
 %% Value
--spec parse_value(binary(), [{binary(), binary()}], binary(), binary(), boolean()) -> {ok, [{binary(), binary()}]}.
-parse_value(<<"\\\"",Rest/binary>>, Parts, Key, Value, true)->
-  parse_value(Rest, Parts, Key, <<Value/binary,$">>, true);
-parse_value(<<"\\\\",Rest/binary>>, Parts, Key, Value, true)->
-  parse_value(Rest, Parts, Key, <<Value/binary,"\\">>, true);
 
-%%    end
-parse_value(<<>>, Parts, Key, Value, false)->
-  {ok, [{Key, Value}|Parts]};
-parse_value(<<"\n">>, Parts, Key, Value, _)->
-  {ok, [{Key, Value}|Parts]};
-parse_value(<<" ",Rest/binary>>, Parts, Key, Value, false)->
-  find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>);
-parse_value(<<"\"",Rest/binary>>, Parts, Key, Value, true)->
-  find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>);
-parse_value(<<>>, Parts, _, _, _)->
+%% Quotes
+parse_quote_value(<<>>, Parts, _, _)->
   {ok, Parts};
+parse_quote_value(<<"\\\"",Rest/binary>>, Parts, Key, Value)->
+  parse_quote_value(Rest, Parts, Key, <<Value/binary,$">>);
+parse_quote_value(<<"\\\\",Rest/binary>>, Parts, Key, Value)->
+  parse_quote_value(Rest, Parts, Key, <<Value/binary,"\\">>);
+parse_quote_value(<<$"," ",Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>);
+parse_quote_value(<<$">>, Parts, Key, Value)->
+  {ok, [{Key, Value}|Parts]};
+parse_quote_value(<<$",Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>);
+parse_quote_value(<<C:1/binary,Rest/binary>>, Parts, Key, Value)->
+  parse_quote_value(Rest, Parts, Key, <<Value/binary,C/binary>>).
 
-%%    append
-parse_value(<<C:1/binary,Rest/binary>>, Parts, Key, Value, HasQuotes)->
-  parse_value(Rest, Parts, Key, <<Value/binary,C/binary>>, HasQuotes).
+%% No Quotes
+-spec parse_value(binary(), [{binary(), binary()}], binary(), binary()) -> {ok, [{binary(), binary()}]}.
+parse_value(<<" ",Rest/binary>>, Parts, Key, Value)->
+  find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>);
+
+%% EOS
+parse_value(<<>>, Parts, Key, Value)->
+  {ok, [{Key, Value}|Parts]};
+parse_value(<<"\n">>, Parts, Key, Value)->
+  {ok, [{Key, Value}|Parts]};
+
+parse_value(<<C:1/binary,Rest/binary>>, Parts, Key, Value)->
+  parse_value(Rest, Parts, Key, <<Value/binary,C/binary>>).
