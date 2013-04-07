@@ -21,7 +21,7 @@
   },
   {
     <<"source=heroku.6041702.web.1.dabb0da6-d9d5-4627-a299-0b218adf1d3e measure=load_avg_1m val=0.00\n">>,
-    [{<<"source">>,<<"heroku.6041702.web.1.dabb0da6-d9d5-4627-a299-0b218adf1d3e">>},{<<"measure">>,<<"load_avg_1m">>},{<<"val">>,<<"0.00">>}]
+    [{<<"source">>,<<"heroku.6041702.web.1.dabb0da6-d9d5-4627-a299-0b218adf1d3e">>},{<<"measure">>,<<"load_avg_1m">>},{<<"val">>,<<"0.00\n">>}]
   },
   {
     <<"    source=heroku.6041702.web.1.dabb0da6-d9d5-4627-a299-0b218adf1d3e    measure=load_avg_1m  val=0.00         \n">>,
@@ -42,7 +42,7 @@
       {<<"connect">>,<<"1ms">>},
       {<<"service">>,<<"364ms">>},
       {<<"status">>,<<"200">>},
-      {<<"bytes">>,<<"20946">>}
+      {<<"bytes">>,<<"20946\n">>}
     ]
   }
 ]).
