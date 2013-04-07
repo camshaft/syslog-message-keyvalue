@@ -145,28 +145,55 @@ parse_quote_value(<<C:1/binary,Rest/binary>>, Parts, Key, Value)->
 %% No Quotes
 -spec parse_value(binary(), [{binary(), binary()}], binary(), binary()) -> {ok, [{binary(), binary()}]}.
 
-%% Adds another 30,000 msg/sec on 2Ghz i7
+%% eos
+parse_value(<<>>, Parts, Key, Value)->
+  {ok, [{Key, Value}|Parts]};
+parse_value(<<"\n">>, Parts, Key, Value)->
+  {ok, [{Key, Value}|Parts]};
+
+%% Adds another 60,000 msg/sec on 2Ghz i7
 %% becomes much slower when the value is longer than 64 bytes
 parse_value(<<$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, Value}|Parts], <<>>, <<>>);
+parse_value(<<$\s>>, Parts, Key, Value)->
+  {ok, [{Key, Value}|Parts]};
 parse_value(<<C:1/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:1/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:2/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:2/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:3/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:3/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:4/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:4/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:5/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:5/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:6/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:6/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:7/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:7/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:8/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:8/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
 parse_value(<<C:9/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+parse_value(<<C:9/binary>>, Parts, Key, Value)->
+  {ok, [{Key, <<Value/binary,C/binary>>}|Parts]};
+
 parse_value(<<C:10/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:11/binary,$\s,Rest/binary>>, Parts, Key, Value)->
@@ -187,6 +214,7 @@ parse_value(<<C:18/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:19/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
 parse_value(<<C:20/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:21/binary,$\s,Rest/binary>>, Parts, Key, Value)->
@@ -207,6 +235,7 @@ parse_value(<<C:28/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:29/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
 parse_value(<<C:30/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:31/binary,$\s,Rest/binary>>, Parts, Key, Value)->
@@ -227,6 +256,7 @@ parse_value(<<C:38/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:39/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
 parse_value(<<C:40/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:41/binary,$\s,Rest/binary>>, Parts, Key, Value)->
@@ -247,6 +277,7 @@ parse_value(<<C:48/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:49/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
 parse_value(<<C:50/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:51/binary,$\s,Rest/binary>>, Parts, Key, Value)->
@@ -267,6 +298,7 @@ parse_value(<<C:58/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:59/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
+
 parse_value(<<C:60/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 parse_value(<<C:61/binary,$\s,Rest/binary>>, Parts, Key, Value)->
@@ -278,11 +310,8 @@ parse_value(<<C:63/binary,$\s,Rest/binary>>, Parts, Key, Value)->
 parse_value(<<C:64/binary,$\s,Rest/binary>>, Parts, Key, Value)->
   find_key(Rest, [{Key, <<Value/binary,C/binary>>}|Parts], <<>>, <<>>);
 
-%% EOS
-parse_value(<<>>, Parts, Key, Value)->
-  {ok, [{Key, Value}|Parts]};
-parse_value(<<"\n">>, Parts, Key, Value)->
-  {ok, [{Key, Value}|Parts]};
 
+
+%% append
 parse_value(<<C:1/binary,Rest/binary>>, Parts, Key, Value)->
   parse_value(Rest, Parts, Key, <<Value/binary,C/binary>>).
