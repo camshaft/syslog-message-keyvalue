@@ -23,6 +23,6 @@ $  make bench
 ./rebar compile
 ==> syslog-message-keyvalue (compile)
 ./test/benchmark
-100000 iterations in 0.949733s
-105292.75069940709 messages/sec
+500000 iterations in 3.037699s
+164598.2699405043 messages/sec
 ```
